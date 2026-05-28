@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Kongroo.CloudGames.Specs": {
+    "Kongroo.Identity.Specs": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

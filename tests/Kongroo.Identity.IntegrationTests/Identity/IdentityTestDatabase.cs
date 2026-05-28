@@ -1,9 +1,9 @@
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Infrastructure;
-using Kongroo.CloudGames.IntegrationTests.Fixtures;
+using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kongroo.CloudGames.IntegrationTests.Identity;
+namespace Kongroo.Identity.IntegrationTests.Identity;
 
 public sealed class IdentityTestDatabase(PostgreSqlFixture fixture)
 {

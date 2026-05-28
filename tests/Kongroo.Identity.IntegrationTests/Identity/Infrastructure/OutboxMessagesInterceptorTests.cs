@@ -1,9 +1,9 @@
 using Kongroo.Identity.Domain;
-using Kongroo.CloudGames.IntegrationTests.Fixtures;
+using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
-namespace Kongroo.CloudGames.IntegrationTests.Identity.Infrastructure;
+namespace Kongroo.Identity.IntegrationTests.Identity.Infrastructure;
 
 public sealed class OutboxMessagesInterceptorTests(PostgreSqlFixture postgreSqlFixture)
     : IClassFixture<PostgreSqlFixture>,

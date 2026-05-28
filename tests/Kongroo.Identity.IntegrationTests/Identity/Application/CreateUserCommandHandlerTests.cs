@@ -2,12 +2,12 @@ using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
-using Kongroo.CloudGames.IntegrationTests.Fixtures;
+using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
-namespace Kongroo.CloudGames.IntegrationTests.Identity.Application;
+namespace Kongroo.Identity.IntegrationTests.Identity.Application;
 
 public sealed class CreateUserCommandHandlerTests(PostgreSqlFixture postgreSqlFixture)
     : IClassFixture<PostgreSqlFixture>,

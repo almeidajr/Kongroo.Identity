@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Shouldly;
 
-namespace Kongroo.CloudGames.UnitTests.BuildingBlocks.Infrastructure;
+namespace Kongroo.Identity.UnitTests.BuildingBlocks.Infrastructure;
 
 public sealed class ApplicationInitializationServiceTests
 {

@@ -1,7 +1,7 @@
 using Kongroo.Identity.Domain;
 using Shouldly;
 
-namespace Kongroo.CloudGames.UnitTests.Identity.Domain;
+namespace Kongroo.Identity.UnitTests.Identity.Domain;
 
 public sealed class UserTests
 {

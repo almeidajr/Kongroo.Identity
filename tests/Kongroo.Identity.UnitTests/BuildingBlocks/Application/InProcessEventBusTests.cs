@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Shouldly;
 
-namespace Kongroo.CloudGames.UnitTests.BuildingBlocks.Application;
+namespace Kongroo.Identity.UnitTests.BuildingBlocks.Application;
 
 public sealed class InProcessEventBusTests
 {

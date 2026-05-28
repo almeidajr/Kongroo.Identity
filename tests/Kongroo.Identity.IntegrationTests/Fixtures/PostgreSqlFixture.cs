@@ -4,7 +4,7 @@ using Testcontainers.PostgreSql;
 using Testcontainers.Xunit;
 using Xunit.Sdk;
 
-namespace Kongroo.CloudGames.IntegrationTests.Fixtures;
+namespace Kongroo.Identity.IntegrationTests.Fixtures;
 
 public sealed class PostgreSqlFixture(IMessageSink messageSink)
     : DbContainerFixture<PostgreSqlBuilder, PostgreSqlContainer>(messageSink)

@@ -1,14 +1,14 @@
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
-using Kongroo.CloudGames.IntegrationTests.Fixtures;
+using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Shouldly;
 
-namespace Kongroo.CloudGames.IntegrationTests.Identity.Infrastructure;
+namespace Kongroo.Identity.IntegrationTests.Identity.Infrastructure;
 
 public sealed class BootstrapAdminInitializerTests(PostgreSqlFixture postgreSqlFixture)
     : IClassFixture<PostgreSqlFixture>,
