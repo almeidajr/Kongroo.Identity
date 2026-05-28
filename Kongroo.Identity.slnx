@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="dotnet-tools.json" />
+    <File Path="README.md" />
+  </Folder>
+
+  <Folder Name="/src/">
+    <Project Path="src/Kongroo.BuildingBlocks/Kongroo.BuildingBlocks.csproj" />
+    <Project Path="src/Kongroo.Identity/Kongroo.Identity.csproj" />
+    <Project Path="src/Kongroo.Identity.Api/Kongroo.Identity.Api.csproj" />
+  </Folder>
+
+  <Folder Name="/tests/">
+    <Project Path="tests/Kongroo.Identity.UnitTests/Kongroo.Identity.UnitTests.csproj" />
+    <Project Path="tests/Kongroo.Identity.IntegrationTests/Kongroo.Identity.IntegrationTests.csproj" />
+    <Project Path="tests/Kongroo.Identity.Specs/Kongroo.Identity.Specs.csproj" />
+  </Folder>
+</Solution>
