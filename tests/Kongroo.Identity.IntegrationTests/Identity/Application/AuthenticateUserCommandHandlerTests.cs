@@ -108,4 +108,3 @@ public sealed class AuthenticateUserCommandHandlerTests(PostgreSqlFixture postgr
         return new UserId(response.Id);
     }
 }
-

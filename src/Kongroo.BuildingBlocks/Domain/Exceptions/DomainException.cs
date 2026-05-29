@@ -8,4 +8,3 @@ public abstract class DomainException : InvalidOperationException
     protected DomainException(string message, Exception innerException)
         : base(message, innerException) { }
 }
-

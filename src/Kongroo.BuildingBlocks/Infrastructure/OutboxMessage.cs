@@ -86,4 +86,3 @@ public sealed class OutboxMessage : Entity<OutboxMessageId>
         ProcessedAt = null;
     }
 }
-

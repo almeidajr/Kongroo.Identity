@@ -58,4 +58,3 @@ public sealed class IdentityApiDriver(ApiScenarioContext scenarioContext)
         return default;
     }
 }
-

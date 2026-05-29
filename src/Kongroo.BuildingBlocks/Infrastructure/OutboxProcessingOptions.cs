@@ -12,4 +12,3 @@ public sealed class OutboxProcessingOptions
     [Range(1, 1000)]
     public int BatchSize { get; set; } = 20;
 }
-

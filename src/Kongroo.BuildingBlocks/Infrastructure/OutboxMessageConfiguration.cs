@@ -15,4 +15,3 @@ public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outbox
         builder.Property(message => message.Payload).HasColumnType("jsonb");
     }
 }
-

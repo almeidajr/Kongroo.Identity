@@ -10,4 +10,3 @@ public sealed record GetUserResponse(
     [property: Description("Display name shown for the user profile.")] string Name,
     [property: Description("Role currently assigned to the user account.")] UserRole Role
 );
-

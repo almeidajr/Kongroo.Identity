@@ -18,4 +18,3 @@ public sealed class IdentityDbContext(DbContextOptions<IdentityDbContext> option
         modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }
-

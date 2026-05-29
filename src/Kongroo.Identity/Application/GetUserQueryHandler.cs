@@ -21,4 +21,3 @@ public sealed class GetUserQueryHandler(IdentityDbContext context)
             .SingleOrDefaultAsync(cancellationToken)
         ?? throw new NotFoundException(nameof(User), $"identifier '{query.UserId}'");
 }
-

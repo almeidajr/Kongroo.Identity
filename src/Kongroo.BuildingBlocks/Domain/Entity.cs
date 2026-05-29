@@ -16,4 +16,3 @@ public abstract class Entity<TEntityId> : IHasDomainEvents
 
     public void ClearDomainEvents() => _domainEvents.Clear();
 }
-

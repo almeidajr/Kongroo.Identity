@@ -27,4 +27,3 @@ public sealed record PersonName(string Value)
         };
     }
 }
-

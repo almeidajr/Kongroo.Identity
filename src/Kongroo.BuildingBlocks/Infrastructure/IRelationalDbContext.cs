@@ -4,4 +4,3 @@ public interface IRelationalDbContext
 {
     static abstract string Schema { get; }
 }
-

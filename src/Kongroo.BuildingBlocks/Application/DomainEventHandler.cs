@@ -23,4 +23,3 @@ public abstract class DomainEventHandler<TDomainEvent> : IDomainEventHandler
 
     public abstract Task HandleAsync(TDomainEvent domainEvent, CancellationToken cancellationToken);
 }
-

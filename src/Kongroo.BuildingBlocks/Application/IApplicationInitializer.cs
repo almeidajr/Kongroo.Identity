@@ -8,4 +8,3 @@ public interface IApplicationInitializer
 
     Task InitializeAsync(CancellationToken cancellationToken);
 }
-

@@ -6,4 +6,3 @@ public record OutboxMessageId(Guid Value)
 
     public static OutboxMessageId From(Guid value) => new(value);
 }
-

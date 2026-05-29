@@ -23,4 +23,3 @@ public sealed class JwtOptions
 
     public SymmetricSecurityKey CreateSigningKey() => new(Encoding.UTF8.GetBytes(SigningKey));
 }
-

@@ -6,4 +6,3 @@ public interface IAccessTokenIssuer
 {
     AuthenticateUserResponse IssueToken(User user);
 }
-

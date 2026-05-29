@@ -78,4 +78,3 @@ public sealed class OutboxMessagesInterceptorTests(PostgreSqlFixture postgreSqlF
             PersonName.From("Kongroo Cloud Games")
         );
 }
-

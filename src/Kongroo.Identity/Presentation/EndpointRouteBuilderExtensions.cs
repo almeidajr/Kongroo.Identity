@@ -169,4 +169,3 @@ public static class EndpointRouteBuilderExtensions
         return response is null ? TypedResults.Unauthorized() : TypedResults.Ok(response);
     }
 }
-

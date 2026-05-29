@@ -46,4 +46,3 @@ public sealed class ApiScenarioContext : IDisposable
         _client?.Dispose();
     }
 }
-

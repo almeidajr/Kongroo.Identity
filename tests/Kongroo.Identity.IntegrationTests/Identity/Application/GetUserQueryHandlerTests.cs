@@ -79,4 +79,3 @@ public sealed class GetUserQueryHandlerTests(PostgreSqlFixture postgreSqlFixture
         return new UserId(response.Id);
     }
 }
-

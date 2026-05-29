@@ -114,4 +114,3 @@ public sealed class BootstrapAdminInitializerTests(PostgreSqlFixture postgreSqlF
             new CreateUserCommandHandler(_passwordHasher, context)
         );
 }
-

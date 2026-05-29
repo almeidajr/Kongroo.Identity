@@ -38,4 +38,3 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.Role).HasConversion<string>().HasMaxLength(16);
     }
 }
-

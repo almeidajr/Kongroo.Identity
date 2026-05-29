@@ -17,4 +17,3 @@ public sealed class SpecsHooks(ApiScenarioContext apiScenarioContext)
     [AfterTestRun]
     public static async Task AfterTestRunAsync() => await SpecsEnvironment.StopAsync();
 }
-

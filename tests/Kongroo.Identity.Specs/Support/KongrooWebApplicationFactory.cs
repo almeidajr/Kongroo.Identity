@@ -33,4 +33,3 @@ public sealed class KongrooWebApplicationFactory(string databaseConnectionString
         builder.ConfigureLogging(loggingBuilder => loggingBuilder.ClearProviders());
     }
 }
-

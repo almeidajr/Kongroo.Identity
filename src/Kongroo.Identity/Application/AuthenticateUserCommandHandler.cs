@@ -40,4 +40,3 @@ public sealed class AuthenticateUserCommandHandler(
         return verificationResult == PasswordVerificationResult.Success;
     }
 }
-

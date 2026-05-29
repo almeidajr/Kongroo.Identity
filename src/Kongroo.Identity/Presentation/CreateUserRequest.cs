@@ -31,4 +31,3 @@ public sealed record CreateUserRequest(
     [property: Description("Display name shown for the user profile.")]
         string Name
 );
-

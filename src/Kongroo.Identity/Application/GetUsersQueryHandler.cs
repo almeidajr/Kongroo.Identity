@@ -21,4 +21,3 @@ public sealed class GetUsersQueryHandler(IdentityDbContext context)
             ))
             .ToListAsync(cancellationToken);
 }
-

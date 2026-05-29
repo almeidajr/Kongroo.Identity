@@ -19,4 +19,3 @@ public abstract class OutboxDbContext<TDbContext>(DbContextOptions options) : Ou
         base.OnModelCreating(modelBuilder);
     }
 }
-

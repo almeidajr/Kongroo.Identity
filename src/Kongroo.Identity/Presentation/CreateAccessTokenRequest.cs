@@ -16,4 +16,3 @@ public sealed record CreateAccessTokenRequest(
     [property: Description("Plain-text password supplied during sign-in.")]
         string Password
 );
-

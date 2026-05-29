@@ -20,4 +20,3 @@ public sealed record PasswordHash(string Value)
         return new PasswordHash(value);
     }
 }
-

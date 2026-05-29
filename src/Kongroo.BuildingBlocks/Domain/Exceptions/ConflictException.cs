@@ -20,4 +20,3 @@ public sealed class ConflictException : DomainException
 
     public string Reason { get; }
 }
-

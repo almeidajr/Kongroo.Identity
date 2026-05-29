@@ -6,4 +6,3 @@ public interface IHasDomainEvents
 
     void ClearDomainEvents();
 }
-

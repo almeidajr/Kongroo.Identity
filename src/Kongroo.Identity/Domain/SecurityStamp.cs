@@ -24,4 +24,3 @@ public sealed record SecurityStamp(string Value)
         return new SecurityStamp(value);
     }
 }
-

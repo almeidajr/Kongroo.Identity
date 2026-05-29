@@ -6,4 +6,3 @@ public abstract record IntegrationEvent
 
     public DateTimeOffset OccurredAt { get; init; } = DateTimeOffset.UtcNow;
 }
-

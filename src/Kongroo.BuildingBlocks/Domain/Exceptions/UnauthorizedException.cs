@@ -20,4 +20,3 @@ public sealed class UnauthorizedException : DomainException
 
     public string Reason { get; }
 }
-

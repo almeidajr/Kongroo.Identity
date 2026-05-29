@@ -12,4 +12,3 @@ public sealed class NonNegativeAttribute<T>()
         T.MaxValue.ToString(null, CultureInfo.InvariantCulture)
     )
     where T : INumber<T>, IMinMaxValue<T>;
-

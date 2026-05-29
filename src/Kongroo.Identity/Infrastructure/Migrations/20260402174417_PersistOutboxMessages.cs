@@ -38,4 +38,3 @@ namespace Kongroo.Identity.Infrastructure.Migrations
         }
     }
 }
-

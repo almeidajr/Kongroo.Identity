@@ -55,4 +55,3 @@ public sealed class User : Entity<UserId>
         RaiseDomainEvent(new UserRoleChangedDomainEvent(Id, previousRole, Role));
     }
 }
-

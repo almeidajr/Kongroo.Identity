@@ -71,4 +71,3 @@ public sealed class GetUsersQueryHandlerTests(PostgreSqlFixture postgreSqlFixtur
         await handler.HandleAsync(command, cancellationToken);
     }
 }
-

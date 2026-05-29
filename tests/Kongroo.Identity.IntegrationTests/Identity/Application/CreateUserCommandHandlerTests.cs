@@ -197,4 +197,3 @@ public sealed class CreateUserCommandHandlerTests(PostgreSqlFixture postgreSqlFi
     private static CreateUserCommand CreateUniqueUserCommand(string password = "Sup3rSecure!") =>
         new("kongroo", "kongroo@example.com", password, "Kongroo Cloud Games", UserRole.User);
 }
-

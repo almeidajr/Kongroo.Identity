@@ -71,4 +71,3 @@ public sealed class InProcessEventBusTests
 
     public sealed record TestIntegrationEvent(string Name) : IntegrationEvent;
 }
-

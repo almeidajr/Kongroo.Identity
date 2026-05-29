@@ -231,4 +231,3 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
         return UserId.From(response.Id);
     }
 }
-

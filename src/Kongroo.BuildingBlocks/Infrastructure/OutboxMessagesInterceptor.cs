@@ -45,4 +45,3 @@ public sealed class OutboxMessagesInterceptor : SaveChangesInterceptor
         }
     }
 }
-

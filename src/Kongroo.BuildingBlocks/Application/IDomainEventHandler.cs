@@ -8,4 +8,3 @@ public interface IDomainEventHandler
 
     Task HandleAsync(DomainEvent domainEvent, CancellationToken cancellationToken);
 }
-

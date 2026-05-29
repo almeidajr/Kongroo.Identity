@@ -34,4 +34,3 @@ public sealed class IdentityTestDatabase(PostgreSqlFixture fixture)
         await context.Database.ExecuteSqlRawAsync(truncateTablesSql, cancellationToken);
     }
 }
-

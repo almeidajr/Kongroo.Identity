@@ -15,4 +15,3 @@ public class DbInitializer<TDbContext>(IHostEnvironment environment, TDbContext 
     public async Task InitializeAsync(CancellationToken cancellationToken) =>
         await context.Database.MigrateAsync(cancellationToken);
 }
-

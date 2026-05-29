@@ -115,4 +115,3 @@ public sealed class IdentityStepDefinitions(IdentityApiDriver identityApiDriver,
         response.Role.ShouldBe(UserRole.User);
     }
 }
-

@@ -31,4 +31,3 @@ public sealed class BootstrapAdminInitializer(
         logger.LogInformation("Bootstrap admin user {Username} was created.", response.Username);
     }
 }
-

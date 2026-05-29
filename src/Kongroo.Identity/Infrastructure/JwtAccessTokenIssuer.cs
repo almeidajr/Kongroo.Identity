@@ -47,4 +47,3 @@ public sealed class JwtAccessTokenIssuer(IOptions<JwtOptions> options, TimeProvi
             new Claim(ClaimTypes.Role, user.Role.ToString()),
         ]);
 }
-

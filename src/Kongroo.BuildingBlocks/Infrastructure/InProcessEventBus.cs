@@ -42,4 +42,3 @@ public sealed class InProcessEventBus(ILogger<InProcessEventBus> logger, IServic
         );
     }
 }
-

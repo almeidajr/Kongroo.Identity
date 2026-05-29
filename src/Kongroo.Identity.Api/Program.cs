@@ -64,9 +64,7 @@ builder
     {
         var jwtOptions =
             builder.Configuration.GetRequiredSection(JwtOptions.SectionName).Get<JwtOptions>()
-            ?? throw new InvalidOperationException(
-                $"Configuration section '{JwtOptions.SectionName}' is missing."
-            );
+            ?? throw new InvalidOperationException($"Configuration section '{JwtOptions.SectionName}' is missing.");
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -99,10 +97,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHealthChecks(
-    "health",
-    new HealthCheckOptions { ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse }
-);
+app.MapHealthChecks("health", new HealthCheckOptions { ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
 app.MapIdentityEndpoints();
 
 if (app.Environment.IsDevelopment())
@@ -117,4 +112,3 @@ public partial class Program
 {
     protected Program() { }
 }
-

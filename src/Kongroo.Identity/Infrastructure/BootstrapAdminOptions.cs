@@ -31,4 +31,3 @@ public sealed class BootstrapAdminOptions
     [MaxLength(PersonName.MaxLength)]
     public string Name { get; init; } = string.Empty;
 }
-

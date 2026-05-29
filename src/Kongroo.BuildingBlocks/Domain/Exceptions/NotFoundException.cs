@@ -20,4 +20,3 @@ public sealed class NotFoundException : DomainException
 
     public string Lookup { get; }
 }
-
