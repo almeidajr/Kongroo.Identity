@@ -4,12 +4,12 @@ User registration, authentication, and JWT issuance microservice for FIAP Cloud 
 
 ## Endpoints
 
-- `POST /identity/users` — Register user
-- `POST /identity/tokens` — Authenticate and get JWT
-- `GET /identity/users/me` — Get authenticated user profile
-- `GET /identity/users` — List all users (Admin only)
-- `GET /identity/users/{id}` — Get user by ID (Admin only)
-- `PUT /identity/users/{id}/role` — Change user role (Admin only)
+- `POST /users` — Register user
+- `POST /tokens` — Authenticate and get JWT
+- `GET /users/me` — Get authenticated user profile
+- `GET /users` — List all users (Admin only)
+- `GET /users/{id}` — Get user by ID (Admin only)
+- `PUT /users/{id}/role` — Change user role (Admin only)
 - `GET /health` — Health check
 
 ## Environment Variables
@@ -49,7 +49,7 @@ dotnet test
 ## Docker
 
 ```bash
-dotnet restore   # generates packages.lock.json if missing
+dotnet restore
 docker build -t kongroo-identity .
 docker run -p 8080:8080 \
   -e ConnectionStrings__Database="Host=localhost;Database=kongroo_identity;Username=kongroo;Password=development" \

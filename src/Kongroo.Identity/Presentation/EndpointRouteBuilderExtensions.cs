@@ -16,7 +16,7 @@ public static class EndpointRouteBuilderExtensions
     {
         public RouteGroupBuilder MapIdentityEndpoints()
         {
-            var routeGroup = endpoints.MapGroup("/identity").WithTags("Identity");
+            var routeGroup = endpoints.MapGroup("/").WithTags("Identity");
             var usersGroup = routeGroup.MapGroup("/users");
 
             usersGroup

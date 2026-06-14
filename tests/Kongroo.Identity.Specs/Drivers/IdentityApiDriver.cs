@@ -9,11 +9,7 @@ public sealed class IdentityApiDriver(ApiScenarioContext scenarioContext)
     public async Task RegisterAsync(string username, string email, string password, string name)
     {
         var request = new CreateUserRequest(username, email, password, name);
-        var response = await scenarioContext.Client.PostAsJsonAsync(
-            "/identity/users",
-            request,
-            ApiScenarioContext.JsonOptions
-        );
+        var response = await scenarioContext.Client.PostAsJsonAsync("/users", request, ApiScenarioContext.JsonOptions);
 
         scenarioContext.RegistrationResponse = await ReadResponseAsync<CreateUserResponse>(response);
     }
@@ -21,18 +17,14 @@ public sealed class IdentityApiDriver(ApiScenarioContext scenarioContext)
     public async Task LoginAsync(string username, string password)
     {
         var request = new CreateAccessTokenRequest(username, password);
-        var response = await scenarioContext.Client.PostAsJsonAsync(
-            "/identity/tokens",
-            request,
-            ApiScenarioContext.JsonOptions
-        );
+        var response = await scenarioContext.Client.PostAsJsonAsync("/tokens", request, ApiScenarioContext.JsonOptions);
 
         scenarioContext.TokenResponse = await ReadResponseAsync<AuthenticateUserResponse>(response);
     }
 
     public async Task GetCurrentUserAsync()
     {
-        var response = await scenarioContext.Client.GetAsync("/identity/users/me");
+        var response = await scenarioContext.Client.GetAsync("/users/me");
         scenarioContext.ProfileResponse = await ReadResponseAsync<GetUserResponse>(response);
     }
 
