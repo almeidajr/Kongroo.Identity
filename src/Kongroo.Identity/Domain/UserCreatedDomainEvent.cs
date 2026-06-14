@@ -2,4 +2,4 @@ using Kongroo.BuildingBlocks.Domain;
 
 namespace Kongroo.Identity.Domain;
 
-public record UserCreatedDomainEvent(UserId UserId) : DomainEvent;
+public sealed record UserCreatedDomainEvent(UserId UserId, Email Email, PersonName Name) : DomainEvent;

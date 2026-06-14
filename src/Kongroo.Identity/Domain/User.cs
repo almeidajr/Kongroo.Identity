@@ -35,7 +35,7 @@ public sealed class User : Entity<UserId>
             Name = name,
             Role = UserRole.User,
         };
-        user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
+        user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id, email, name));
         return user;
     }
 

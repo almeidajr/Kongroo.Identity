@@ -1,7 +1,9 @@
 using Kongroo.BuildingBlocks;
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Application.Abstractions;
 using Kongroo.Identity.Infrastructure;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,8 @@ public static class ServiceCollectionExtensions
             services.AddScoped<GetUserQueryHandler>();
             services.AddScoped<GetUsersQueryHandler>();
             services.AddScoped<UpdateUserRoleCommandHandler>();
+
+            services.AddScoped<IDomainEventHandler, UserCreatedDomainEventHandler>();
         }
 
         private void AddInfrastructure(IConfiguration configuration)
@@ -47,6 +51,18 @@ public static class ServiceCollectionExtensions
             services.AddApplicationInitializer<BootstrapAdminInitializer>();
             services.AddSingleton<IAccessTokenIssuer, JwtAccessTokenIssuer>();
             services.AddSingleton<IPasswordHasher<string>, PasswordHasher<string>>();
+
+            services
+                .AddOptions<RabbitMqTransportOptions>()
+                .Bind(configuration.GetRequiredSection("RabbitMq"))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+            services.AddMassTransit(busRegistration =>
+            {
+                busRegistration.SetKebabCaseEndpointNameFormatter();
+
+                busRegistration.UsingRabbitMq((context, busFactory) => busFactory.ConfigureEndpoints(context));
+            });
         }
     }
 }
