@@ -2,7 +2,8 @@
 
 User registration, authentication, and JWT issuance microservice for the
 Kongroo platform. Built with ASP.NET Core and PostgreSQL, following
-Domain-Driven Design with a transactional outbox for reliable event publishing.
+Domain-Driven Design with a transactional outbox that reliably publishes
+integration events (e.g. `UserCreatedIntegrationEvent`) to RabbitMQ via MassTransit.
 
 ## Tags
 
@@ -12,11 +13,15 @@ Domain-Driven Design with a transactional outbox for reliable event publishing.
 
 ## Quick start
 
-The container listens on port **8080** and requires a PostgreSQL database.
+The container listens on port **8080** and requires a PostgreSQL database and a
+RabbitMQ broker.
 
 ```bash
 docker run -p 8080:8080 \
   -e ConnectionStrings__Database="Host=postgres;Database=kongroo_identity;Username=kongroo;Password=development" \
+  -e RabbitMq__Host="rabbitmq" \
+  -e RabbitMq__User="kongroo" \
+  -e RabbitMq__Pass="development" \
   -e Jwt__Issuer="kongroo" \
   -e Jwt__Audience="kongroo" \
   -e Jwt__SigningKey="<a-secret-key-at-least-32-characters-long>" \
@@ -43,6 +48,9 @@ nested configuration sections.
 | Variable | Description |
 |---|---|
 | `ConnectionStrings__Database` | PostgreSQL connection string |
+| `RabbitMq__Host` | RabbitMQ broker hostname |
+| `RabbitMq__User` | RabbitMQ username |
+| `RabbitMq__Pass` | RabbitMQ password |
 | `Jwt__Issuer` | JWT issuer |
 | `Jwt__Audience` | JWT audience |
 | `Jwt__SigningKey` | JWT signing key (min 32 chars) |
@@ -58,6 +66,7 @@ empty.
 ## Requirements
 
 - A reachable PostgreSQL database
+- A reachable RabbitMQ broker
 
 ## Source
 
