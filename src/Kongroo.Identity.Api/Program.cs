@@ -55,8 +55,8 @@ builder
     .Services.AddHealthChecks()
     .AddApplicationLifecycleHealthCheck()
     .AddResourceUtilizationHealthCheck()
-    .AddNpgSql(_ => builder.Configuration.GetRequiredConnectionString("Database"))
-    .AddDbContextCheck<IdentityDbContext>();
+    .AddNpgSql(_ => builder.Configuration.GetRequiredConnectionString("Database"), tags: ["ready"])
+    .AddDbContextCheck<IdentityDbContext>(tags: ["ready"]);
 
 builder
     .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -93,18 +93,16 @@ var app = builder.Build();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHealthChecks("health", new HealthCheckOptions { ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
+app.MapHealthChecks("health/live", new HealthCheckOptions { Predicate = _ => false });
+app.MapHealthChecks("health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });
 app.MapIdentityEndpoints();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference();
-}
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 await app.RunAsync();
 
