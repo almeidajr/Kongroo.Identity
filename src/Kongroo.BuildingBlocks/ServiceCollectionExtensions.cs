@@ -15,26 +15,7 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddBuildingBlocks(IConfiguration configuration)
         {
             services.AddSingleton(TimeProvider.System);
-            services.AddSingleton<OutboxMessagesInterceptor>();
-
-            services
-                .AddOptions<OutboxProcessingOptions>()
-                .Bind(configuration.GetRequiredSection(OutboxProcessingOptions.SectionName))
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-
             services.AddHostedService<ApplicationInitializationService>();
-
-            return services;
-        }
-
-        public IServiceCollection AddOutboxDbContext<TDbContext>(IConfiguration configuration)
-            where TDbContext : OutboxDbContext<TDbContext>, IRelationalDbContext
-        {
-            services.AddRelationalDbContext<TDbContext>(configuration);
-
-            services.AddScoped<OutboxMessageProcessor<TDbContext>>();
-            services.AddHostedService<OutboxMessageProcessorHostedService<TDbContext>>();
 
             return services;
         }
@@ -48,7 +29,6 @@ public static class ServiceCollectionExtensions
                     var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
                     contextOptions
-                        .AddInterceptors(serviceProvider.GetRequiredService<OutboxMessagesInterceptor>())
                         .UseNpgsql(
                             configuration.GetConnectionString("Database"),
                             postgresOptions => postgresOptions.MigrationsHistoryTable("migrations", TDbContext.Schema)
@@ -62,6 +42,7 @@ public static class ServiceCollectionExtensions
                 }
             );
             services.AddApplicationInitializer<DbInitializer<TDbContext>>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<TDbContext>>();
             return services;
         }
 

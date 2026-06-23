@@ -32,11 +32,12 @@ public static class ServiceCollectionExtensions
             services.AddScoped<UpdateUserRoleCommandHandler>();
 
             services.AddScoped<IDomainEventHandler, UserCreatedDomainEventHandler>();
+            services.AddScoped<IDomainEventHandler, UserRoleChangedDomainEventHandler>();
         }
 
         private void AddInfrastructure(IConfiguration configuration)
         {
-            services.AddOutboxDbContext<IdentityDbContext>(configuration);
+            services.AddRelationalDbContext<IdentityDbContext>(configuration);
 
             services
                 .AddOptions<BootstrapAdminOptions>()
@@ -60,6 +61,12 @@ public static class ServiceCollectionExtensions
             services.AddMassTransit(busRegistration =>
             {
                 busRegistration.SetKebabCaseEndpointNameFormatter();
+
+                busRegistration.AddEntityFrameworkOutbox<IdentityDbContext>(outbox =>
+                {
+                    outbox.UsePostgres();
+                    outbox.UseBusOutbox();
+                });
 
                 busRegistration.UsingRabbitMq((context, busFactory) => busFactory.ConfigureEndpoints(context));
             });

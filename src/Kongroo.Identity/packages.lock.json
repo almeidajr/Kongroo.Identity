@@ -27,6 +27,16 @@
         "resolved": "8.5.10",
         "contentHash": "HmLBZ0bhTR/OOyY3hm29oW9VNwiB/gbgg1+H1hmt2j5JefPW4qp9wAyjpAh7BtcpiXoKY9rGtKtgtpxTKi5GxQ=="
       },
+      "MassTransit.EntityFrameworkCore": {
+        "type": "Direct",
+        "requested": "[8.5.10, )",
+        "resolved": "8.5.10",
+        "contentHash": "eCfWj3l4WMlDOc64I48yq3jePQMaQ+07hGIpWngvYW8/ey7qbayO4osHeO0m/FKBPUIfNJqTMRqAqWMn/xV+ww==",
+        "dependencies": {
+          "MassTransit": "8.5.10",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.0"
+        }
+      },
       "MassTransit.RabbitMQ": {
         "type": "Direct",
         "requested": "[8.5.10, )",

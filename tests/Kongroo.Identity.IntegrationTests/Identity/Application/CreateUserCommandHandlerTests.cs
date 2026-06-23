@@ -1,4 +1,5 @@
 using Kongroo.BuildingBlocks.Domain.Exceptions;
+using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -192,7 +193,8 @@ public sealed class CreateUserCommandHandlerTests(PostgreSqlFixture postgreSqlFi
         savedUser.Role.ShouldBe(UserRole.Admin);
     }
 
-    private CreateUserCommandHandler CreateHandler(IdentityDbContext context) => new(_passwordHasher, context);
+    private CreateUserCommandHandler CreateHandler(IdentityDbContext context) =>
+        new(_passwordHasher, context, new UnitOfWork<IdentityDbContext>(context, []));
 
     private static CreateUserCommand CreateUniqueUserCommand(string password = "Sup3rSecure!") =>
         new("kongroo", "kongroo@example.com", password, "Kongroo Cloud Games", UserRole.User);

@@ -33,8 +33,6 @@ public sealed class KongrooWebApplicationFactory(
                     ["BootstrapAdmin:Email"] = "spec-admin@kongroo.dev",
                     ["BootstrapAdmin:Password"] = "Sup3rSecure!",
                     ["BootstrapAdmin:Name"] = "Specs Admin",
-                    ["OutboxProcessing:PollingInterval"] = "00:10:00",
-                    ["OutboxProcessing:BatchSize"] = "1",
                 };
 
                 configurationBuilder.AddInMemoryCollection(testConfiguration);

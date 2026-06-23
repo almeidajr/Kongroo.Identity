@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -61,7 +62,11 @@ public sealed class BootstrapAdminInitializerTests(PostgreSqlFixture postgreSqlF
     {
         // Arrange
         await using var context = _database.CreateDbContext();
-        var createUserHandler = new CreateUserCommandHandler(_passwordHasher, context);
+        var createUserHandler = new CreateUserCommandHandler(
+            _passwordHasher,
+            context,
+            new UnitOfWork<IdentityDbContext>(context, [])
+        );
         await createUserHandler.HandleAsync(
             new CreateUserCommand(
                 "existing-user",
@@ -111,6 +116,6 @@ public sealed class BootstrapAdminInitializerTests(PostgreSqlFixture postgreSqlF
             NullLogger<BootstrapAdminInitializer>.Instance,
             Options.Create(options),
             context,
-            new CreateUserCommandHandler(_passwordHasher, context)
+            new CreateUserCommandHandler(_passwordHasher, context, new UnitOfWork<IdentityDbContext>(context, []))
         );
 }

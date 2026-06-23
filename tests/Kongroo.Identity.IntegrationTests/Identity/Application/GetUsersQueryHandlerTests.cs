@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -67,7 +68,11 @@ public sealed class GetUsersQueryHandlerTests(PostgreSqlFixture postgreSqlFixtur
         CancellationToken cancellationToken
     )
     {
-        var handler = new CreateUserCommandHandler(new PasswordHasher<string>(), context);
+        var handler = new CreateUserCommandHandler(
+            new PasswordHasher<string>(),
+            context,
+            new UnitOfWork<IdentityDbContext>(context, [])
+        );
         await handler.HandleAsync(command, cancellationToken);
     }
 }

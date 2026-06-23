@@ -67,7 +67,9 @@ public static class SpecsEnvironment
     {
         const string truncateSql = """
             TRUNCATE TABLE
-                "identity"."outbox_messages",
+                "identity"."outbox_message",
+                "identity"."outbox_state",
+                "identity"."inbox_state",
                 "identity"."users"
             CASCADE;
             """;

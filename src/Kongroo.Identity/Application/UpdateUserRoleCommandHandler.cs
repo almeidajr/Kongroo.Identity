@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -5,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kongroo.Identity.Application;
 
-public sealed class UpdateUserRoleCommandHandler(IdentityDbContext context)
+public sealed class UpdateUserRoleCommandHandler(IdentityDbContext context, IUnitOfWork unitOfWork)
 {
     public async Task<GetUserResponse> HandleAsync(UpdateUserRoleCommand command, CancellationToken cancellationToken)
     {
@@ -26,7 +27,7 @@ public sealed class UpdateUserRoleCommandHandler(IdentityDbContext context)
             user.RevokeAdmin();
         }
 
-        await context.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return new GetUserResponse(user.Id.Value, user.Username.Value, user.Email.Value, user.Name.Value, user.Role);
     }

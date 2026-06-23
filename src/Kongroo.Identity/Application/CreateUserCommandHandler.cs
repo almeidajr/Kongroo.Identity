@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -6,7 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kongroo.Identity.Application;
 
-public sealed class CreateUserCommandHandler(IPasswordHasher<string> passwordHasher, IdentityDbContext context)
+public sealed class CreateUserCommandHandler(
+    IPasswordHasher<string> passwordHasher,
+    IdentityDbContext context,
+    IUnitOfWork unitOfWork
+)
 {
     public async Task<CreateUserResponse> HandleAsync(CreateUserCommand command, CancellationToken cancellationToken)
     {
@@ -25,7 +30,7 @@ public sealed class CreateUserCommandHandler(IPasswordHasher<string> passwordHas
         }
 
         context.Users.Add(user);
-        await context.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return new CreateUserResponse(user.Id.Value, user.Username.Value, user.Email.Value, user.Name.Value);
     }

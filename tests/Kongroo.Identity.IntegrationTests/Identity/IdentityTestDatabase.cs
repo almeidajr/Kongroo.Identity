@@ -1,4 +1,3 @@
-using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,6 @@ public sealed class IdentityTestDatabase(PostgreSqlFixture fixture)
             new DbContextOptionsBuilder<IdentityDbContext>()
                 .EnableDetailedErrors()
                 .EnableSensitiveDataLogging()
-                .AddInterceptors(new OutboxMessagesInterceptor())
                 .UseNpgsql(
                     fixture.ConnectionString,
                     postgresOptions => postgresOptions.MigrationsHistoryTable("migrations", IdentityDbContext.Schema)
@@ -27,7 +25,9 @@ public sealed class IdentityTestDatabase(PostgreSqlFixture fixture)
         await context.Database.MigrateAsync(cancellationToken);
         var truncateTablesSql = $"""
             TRUNCATE TABLE
-                "{IdentityDbContext.Schema}"."outbox_messages",
+                "{IdentityDbContext.Schema}"."outbox_message",
+                "{IdentityDbContext.Schema}"."outbox_state",
+                "{IdentityDbContext.Schema}"."inbox_state",
                 "{IdentityDbContext.Schema}"."users"
             CASCADE;
             """;
