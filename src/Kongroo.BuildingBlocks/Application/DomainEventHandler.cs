@@ -3,11 +3,11 @@ using Kongroo.BuildingBlocks.Domain;
 namespace Kongroo.BuildingBlocks.Application;
 
 public abstract class DomainEventHandler<TDomainEvent> : IDomainEventHandler
-    where TDomainEvent : DomainEvent
+    where TDomainEvent : IDomainEvent
 {
     public Type EventType => typeof(TDomainEvent);
 
-    public Task HandleAsync(DomainEvent domainEvent, CancellationToken cancellationToken)
+    public Task HandleAsync(IDomainEvent domainEvent, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
 

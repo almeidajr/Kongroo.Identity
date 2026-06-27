@@ -157,10 +157,17 @@
         "type": "Project",
         "dependencies": {
           "EFCore.NamingConventions": "[10.0.1, )",
+          "Kongroo.BuildingBlocks.Domain": "[0.1.0, )",
           "Microsoft.EntityFrameworkCore": "[10.0.9, )",
           "Microsoft.EntityFrameworkCore.Relational": "[10.0.9, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )"
         }
+      },
+      "Kongroo.BuildingBlocks.Domain": {
+        "type": "CentralTransitive",
+        "requested": "[0.1.0, )",
+        "resolved": "0.1.0",
+        "contentHash": "Q7gNMCULeAK7MM2i/J216UQUabqQVyer4i3KcFWrGve3KszERBAVimYb0l0+80oeIARoEq+cgsDfHAUpccZpbQ=="
       },
       "Microsoft.EntityFrameworkCore": {
         "type": "CentralTransitive",

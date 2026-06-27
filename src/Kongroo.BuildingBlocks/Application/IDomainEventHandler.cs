@@ -6,5 +6,5 @@ public interface IDomainEventHandler
 {
     Type EventType { get; }
 
-    Task HandleAsync(DomainEvent domainEvent, CancellationToken cancellationToken);
+    Task HandleAsync(IDomainEvent domainEvent, CancellationToken cancellationToken);
 }

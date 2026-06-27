@@ -1,6 +1,8 @@
+using Kongroo.BuildingBlocks.Domain;
+
 namespace Kongroo.Identity.Domain;
 
-public record UserId(Guid Value)
+public record UserId(Guid Value) : IGuidId<UserId>
 {
     public static UserId Create() => new(Guid.CreateVersion7());
 

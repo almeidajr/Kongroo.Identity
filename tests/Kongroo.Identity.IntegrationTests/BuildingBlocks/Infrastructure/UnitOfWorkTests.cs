@@ -49,11 +49,11 @@ public sealed class UnitOfWorkTests(PostgreSqlFixture postgreSqlFixture)
 
     private sealed class RecordingHandler : IDomainEventHandler
     {
-        public List<DomainEvent> Handled { get; } = [];
+        public List<IDomainEvent> Handled { get; } = [];
 
         public Type EventType => typeof(UserCreatedDomainEvent);
 
-        public Task HandleAsync(DomainEvent domainEvent, CancellationToken cancellationToken)
+        public Task HandleAsync(IDomainEvent domainEvent, CancellationToken cancellationToken)
         {
             Handled.Add(domainEvent);
             return Task.CompletedTask;
