@@ -6,23 +6,23 @@ public static class TypeExtensions
     {
         public string ToDisplayName()
         {
-            var typeName = GetTypeNameWithoutGenericArity(type);
+            var typeName = type.GetTypeNameWithoutGenericArity();
 
-            return type.IsGenericType ? $"{typeName}<{FormatGenericArguments(type)}>" : typeName;
+            return type.IsGenericType ? $"{typeName}<{type.FormatGenericArguments()}>" : typeName;
         }
-    }
 
-    private static string GetTypeNameWithoutGenericArity(Type type)
-    {
-        var arityIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
+        public string GetTypeNameWithoutGenericArity()
+        {
+            var arityIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
 
-        return arityIndex >= 0 ? type.Name[..arityIndex] : type.Name;
-    }
+            return arityIndex >= 0 ? type.Name[..arityIndex] : type.Name;
+        }
 
-    private static string FormatGenericArguments(Type type)
-    {
-        var genericArguments = type.GetGenericArguments().Select(argument => argument.ToDisplayName());
+        public string FormatGenericArguments()
+        {
+            var genericArguments = type.GetGenericArguments().Select(argument => argument.ToDisplayName());
 
-        return string.Join(", ", genericArguments);
+            return string.Join(", ", genericArguments);
+        }
     }
 }
