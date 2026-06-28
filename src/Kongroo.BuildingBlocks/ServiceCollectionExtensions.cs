@@ -42,13 +42,9 @@ public static class ServiceCollectionExtensions
                     }
                 }
             );
-            services.AddApplicationInitializer<DbInitializer<TDbContext>>();
-            services.AddScoped<IUnitOfWork, UnitOfWork<TDbContext>>();
+            services.AddDbInitializer<TDbContext>();
+            services.AddUnitOfWork<TDbContext>();
             return services;
         }
-
-        public IServiceCollection AddApplicationInitializer<TApplicationInitializer>()
-            where TApplicationInitializer : class, IApplicationInitializer =>
-            services.AddScoped<IApplicationInitializer, TApplicationInitializer>();
     }
 }

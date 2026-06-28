@@ -1,5 +1,6 @@
 using Kongroo.BuildingBlocks;
 using Kongroo.BuildingBlocks.Application;
+using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Application.Abstractions;
 using Kongroo.Identity.Infrastructure;

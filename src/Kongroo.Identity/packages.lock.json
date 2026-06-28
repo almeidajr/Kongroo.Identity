@@ -159,6 +159,7 @@
           "EFCore.NamingConventions": "[10.0.1, )",
           "Kongroo.BuildingBlocks.Application": "[0.1.0, )",
           "Kongroo.BuildingBlocks.Domain": "[0.1.0, )",
+          "Kongroo.BuildingBlocks.Infrastructure": "[0.2.0, )",
           "Microsoft.EntityFrameworkCore": "[10.0.9, )",
           "Microsoft.EntityFrameworkCore.Relational": "[10.0.9, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )"
@@ -178,6 +179,17 @@
         "requested": "[0.1.0, )",
         "resolved": "0.1.0",
         "contentHash": "Q7gNMCULeAK7MM2i/J216UQUabqQVyer4i3KcFWrGve3KszERBAVimYb0l0+80oeIARoEq+cgsDfHAUpccZpbQ=="
+      },
+      "Kongroo.BuildingBlocks.Infrastructure": {
+        "type": "CentralTransitive",
+        "requested": "[0.2.0, )",
+        "resolved": "0.2.0",
+        "contentHash": "HQC7GK9sNeAdPvu5TWpWEVTBxkw7L4PJLMDJvqVJJivfOGLU/Xlb5Q4UpvRwdZ6bFE0sIFUsLWgmzNapX4ZbdA==",
+        "dependencies": {
+          "EFCore.NamingConventions": "10.0.1",
+          "Kongroo.BuildingBlocks.Application": "0.1.0",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.9"
+        }
       },
       "Microsoft.EntityFrameworkCore": {
         "type": "CentralTransitive",
