@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -5,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kongroo.Identity.Application;
 
-public sealed class GetUserQueryHandler(IdentityDbContext context)
+public sealed class GetUserQueryHandler(IdentityDbContext context) : IQueryHandler<GetUserQuery, GetUserResponse>
 {
     public async Task<GetUserResponse> HandleAsync(GetUserQuery query, CancellationToken cancellationToken) =>
         await context

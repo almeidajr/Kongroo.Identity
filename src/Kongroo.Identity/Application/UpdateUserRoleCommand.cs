@@ -1,5 +1,7 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.Identity.Domain;
 
 namespace Kongroo.Identity.Application;
 
-public sealed record UpdateUserRoleCommand(Guid ActingUserId, Guid TargetUserId, UserRole Role);
+public sealed record UpdateUserRoleCommand(Guid ActingUserId, Guid TargetUserId, UserRole Role)
+    : ICommand<GetUserResponse>;

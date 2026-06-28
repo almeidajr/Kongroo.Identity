@@ -11,7 +11,7 @@ public sealed class CreateUserCommandHandler(
     IPasswordHasher<string> passwordHasher,
     IdentityDbContext context,
     IUnitOfWork unitOfWork
-)
+) : ICommandHandler<CreateUserCommand, CreateUserResponse>
 {
     public async Task<CreateUserResponse> HandleAsync(CreateUserCommand command, CancellationToken cancellationToken)
     {

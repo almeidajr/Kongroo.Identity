@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Kongroo.Identity.Application;
 
 public sealed class UpdateUserRoleCommandHandler(IdentityDbContext context, IUnitOfWork unitOfWork)
+    : ICommandHandler<UpdateUserRoleCommand, GetUserResponse>
 {
     public async Task<GetUserResponse> HandleAsync(UpdateUserRoleCommand command, CancellationToken cancellationToken)
     {

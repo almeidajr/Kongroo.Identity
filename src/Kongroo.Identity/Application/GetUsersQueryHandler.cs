@@ -1,9 +1,11 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.Identity.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kongroo.Identity.Application;
 
 public sealed class GetUsersQueryHandler(IdentityDbContext context)
+    : IQueryHandler<GetUsersQuery, IReadOnlyList<GetUserResponse>>
 {
     public async Task<IReadOnlyList<GetUserResponse>> HandleAsync(
         GetUsersQuery query,

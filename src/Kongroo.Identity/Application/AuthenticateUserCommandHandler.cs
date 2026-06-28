@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.Identity.Application.Abstractions;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
@@ -10,7 +11,7 @@ public sealed class AuthenticateUserCommandHandler(
     IdentityDbContext context,
     IPasswordHasher<string> passwordHasher,
     IAccessTokenIssuer accessTokenIssuer
-)
+) : ICommandHandler<AuthenticateUserCommand, AuthenticateUserResponse?>
 {
     public async Task<AuthenticateUserResponse?> HandleAsync(
         AuthenticateUserCommand command,
