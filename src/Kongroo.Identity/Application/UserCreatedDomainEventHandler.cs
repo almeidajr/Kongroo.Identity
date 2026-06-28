@@ -8,7 +8,10 @@ namespace Kongroo.Identity.Application;
 public class UserCreatedDomainEventHandler(IPublishEndpoint publishEndpoint)
     : DomainEventHandler<UserCreatedDomainEvent>
 {
-    public override async Task HandleAsync(UserCreatedDomainEvent domainEvent, CancellationToken cancellationToken) =>
+    protected override async Task HandleAsync(
+        UserCreatedDomainEvent domainEvent,
+        CancellationToken cancellationToken
+    ) =>
         await publishEndpoint.Publish(
             new UserCreatedIntegrationEvent(domainEvent.UserId.Value, domainEvent.Email.Value, domainEvent.Name.Value),
             cancellationToken

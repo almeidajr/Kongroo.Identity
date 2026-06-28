@@ -6,6 +6,7 @@ using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.IntegrationTests.Fixtures;
 using Kongroo.Identity.IntegrationTests.Identity;
 using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 using Shouldly;
 
 namespace Kongroo.Identity.IntegrationTests.BuildingBlocks.Infrastructure;
@@ -17,7 +18,7 @@ public sealed class UnitOfWorkTests(PostgreSqlFixture postgreSqlFixture)
     private readonly IdentityTestDatabase _database = new(postgreSqlFixture);
 
     [Fact]
-    public async Task CommitAsync_ShouldDispatchEvents_ClearThem_AndPersist()
+    public async Task CommitAsync_ShouldDispatchEventsAndPersist()
     {
         // Arrange
         await using var context = _database.CreateDbContext();
@@ -29,15 +30,19 @@ public sealed class UnitOfWorkTests(PostgreSqlFixture postgreSqlFixture)
         );
         context.Users.Add(user);
 
-        var recordingHandler = new RecordingHandler();
-        var unitOfWork = new UnitOfWork<IdentityDbContext>(context, [recordingHandler]);
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var unitOfWork = new UnitOfWork<IdentityDbContext>(context, dispatcher);
 
         // Act
         await unitOfWork.CommitAsync(TestContext.Current.CancellationToken);
 
         // Assert
-        recordingHandler.Handled.ShouldHaveSingleItem().ShouldBeOfType<UserCreatedDomainEvent>();
-        user.DomainEvents.ShouldBeEmpty();
+        await dispatcher
+            .Received(1)
+            .DispatchAsync(
+                Arg.Is<IEnumerable<IHasDomainEvents>>(sources => ReferenceEquals(sources.Single(), user)),
+                Arg.Any<CancellationToken>()
+            );
 
         context.ChangeTracker.Clear();
         (await context.Users.CountAsync(TestContext.Current.CancellationToken)).ShouldBe(1);
@@ -46,17 +51,4 @@ public sealed class UnitOfWorkTests(PostgreSqlFixture postgreSqlFixture)
     public async ValueTask InitializeAsync() => await _database.ResetAsync(TestContext.Current.CancellationToken);
 
     public ValueTask DisposeAsync() => ValueTask.CompletedTask;
-
-    private sealed class RecordingHandler : IDomainEventHandler
-    {
-        public List<IDomainEvent> Handled { get; } = [];
-
-        public Type EventType => typeof(UserCreatedDomainEvent);
-
-        public Task HandleAsync(IDomainEvent domainEvent, CancellationToken cancellationToken)
-        {
-            Handled.Add(domainEvent);
-            return Task.CompletedTask;
-        }
-    }
 }

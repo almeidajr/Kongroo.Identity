@@ -8,7 +8,7 @@ namespace Kongroo.Identity.Application;
 public class UserRoleChangedDomainEventHandler(IPublishEndpoint publishEndpoint)
     : DomainEventHandler<UserRoleChangedDomainEvent>
 {
-    public override async Task HandleAsync(
+    protected override async Task HandleAsync(
         UserRoleChangedDomainEvent domainEvent,
         CancellationToken cancellationToken
     ) =>

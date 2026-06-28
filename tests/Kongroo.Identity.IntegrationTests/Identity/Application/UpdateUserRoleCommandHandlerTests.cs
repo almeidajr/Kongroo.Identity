@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
@@ -6,6 +7,7 @@ using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 using Shouldly;
 
 namespace Kongroo.Identity.IntegrationTests.Identity.Application;
@@ -44,7 +46,10 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
-        var handler = new UpdateUserRoleCommandHandler(context, new UnitOfWork<IdentityDbContext>(context, []));
+        var handler = new UpdateUserRoleCommandHandler(
+            context,
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+        );
 
         // Act
         var response = await handler.HandleAsync(
@@ -87,7 +92,10 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
-        var handler = new UpdateUserRoleCommandHandler(context, new UnitOfWork<IdentityDbContext>(context, []));
+        var handler = new UpdateUserRoleCommandHandler(
+            context,
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+        );
 
         // Act
         var response = await handler.HandleAsync(
@@ -118,7 +126,10 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             context,
             TestContext.Current.CancellationToken
         );
-        var handler = new UpdateUserRoleCommandHandler(context, new UnitOfWork<IdentityDbContext>(context, []));
+        var handler = new UpdateUserRoleCommandHandler(
+            context,
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+        );
         var missingUserId = Guid.NewGuid();
 
         // Act
@@ -145,7 +156,10 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
-        var handler = new UpdateUserRoleCommandHandler(context, new UnitOfWork<IdentityDbContext>(context, []));
+        var handler = new UpdateUserRoleCommandHandler(
+            context,
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+        );
         await handler.HandleAsync(
             new UpdateUserRoleCommand(adminUserId.Value, adminUserId.Value, UserRole.Admin),
             TestContext.Current.CancellationToken
@@ -199,7 +213,10 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
-        var handler = new UpdateUserRoleCommandHandler(context, new UnitOfWork<IdentityDbContext>(context, []));
+        var handler = new UpdateUserRoleCommandHandler(
+            context,
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+        );
 
         // Act
         var response = await handler.HandleAsync(
@@ -230,7 +247,7 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
         var createHandler = new CreateUserCommandHandler(
             new PasswordHasher<string>(),
             context,
-            new UnitOfWork<IdentityDbContext>(context, [])
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
         );
         var response = await createHandler.HandleAsync(command, cancellationToken);
         return UserId.From(response.Id);

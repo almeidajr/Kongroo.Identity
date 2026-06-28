@@ -12,6 +12,15 @@
           "Microsoft.EntityFrameworkCore.Relational": "[10.0.1, 11.0.0)"
         }
       },
+      "Kongroo.BuildingBlocks.Application": {
+        "type": "Direct",
+        "requested": "[0.1.0, )",
+        "resolved": "0.1.0",
+        "contentHash": "SID4WL+jF+Cg52AjVMP3mDLlDBFo4bagyDJRfwVsW/WzGbIrEmc6ihbAL3xejlIHmiQtVzPxs3Ge7M6TGhG2iw==",
+        "dependencies": {
+          "Kongroo.BuildingBlocks.Domain": "0.1.0"
+        }
+      },
       "Kongroo.BuildingBlocks.Domain": {
         "type": "Direct",
         "requested": "[0.1.0, )",

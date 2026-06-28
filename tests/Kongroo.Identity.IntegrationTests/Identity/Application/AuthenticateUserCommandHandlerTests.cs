@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Application.Abstractions;
@@ -107,7 +108,7 @@ public sealed class AuthenticateUserCommandHandlerTests(PostgreSqlFixture postgr
         var handler = new CreateUserCommandHandler(
             _passwordHasher,
             context,
-            new UnitOfWork<IdentityDbContext>(context, [])
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
         );
         var response = await handler.HandleAsync(command, cancellationToken);
         return new UserId(response.Id);

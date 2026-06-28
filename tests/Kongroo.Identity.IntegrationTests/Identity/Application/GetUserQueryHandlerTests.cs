@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
@@ -5,6 +6,7 @@ using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Identity;
+using NSubstitute;
 using Shouldly;
 
 namespace Kongroo.Identity.IntegrationTests.Identity.Application;
@@ -78,7 +80,7 @@ public sealed class GetUserQueryHandlerTests(PostgreSqlFixture postgreSqlFixture
         var handler = new CreateUserCommandHandler(
             new PasswordHasher<string>(),
             context,
-            new UnitOfWork<IdentityDbContext>(context, [])
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
         );
         var response = await handler.HandleAsync(command, cancellationToken);
         return new UserId(response.Id);

@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+using NSubstitute;
 using Shouldly;
 
 namespace Kongroo.Identity.IntegrationTests.Identity.Infrastructure;
@@ -65,7 +67,7 @@ public sealed class BootstrapAdminInitializerTests(PostgreSqlFixture postgreSqlF
         var createUserHandler = new CreateUserCommandHandler(
             _passwordHasher,
             context,
-            new UnitOfWork<IdentityDbContext>(context, [])
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
         );
         await createUserHandler.HandleAsync(
             new CreateUserCommand(
@@ -116,6 +118,10 @@ public sealed class BootstrapAdminInitializerTests(PostgreSqlFixture postgreSqlF
             NullLogger<BootstrapAdminInitializer>.Instance,
             Options.Create(options),
             context,
-            new CreateUserCommandHandler(_passwordHasher, context, new UnitOfWork<IdentityDbContext>(context, []))
+            new CreateUserCommandHandler(
+                _passwordHasher,
+                context,
+                new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+            )
         );
 }

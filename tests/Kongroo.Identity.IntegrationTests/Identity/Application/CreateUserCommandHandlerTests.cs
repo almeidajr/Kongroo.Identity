@@ -1,3 +1,4 @@
+using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
@@ -6,6 +7,7 @@ using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 using Shouldly;
 
 namespace Kongroo.Identity.IntegrationTests.Identity.Application;
@@ -194,7 +196,11 @@ public sealed class CreateUserCommandHandlerTests(PostgreSqlFixture postgreSqlFi
     }
 
     private CreateUserCommandHandler CreateHandler(IdentityDbContext context) =>
-        new(_passwordHasher, context, new UnitOfWork<IdentityDbContext>(context, []));
+        new(
+            _passwordHasher,
+            context,
+            new UnitOfWork<IdentityDbContext>(context, Substitute.For<IDomainEventDispatcher>())
+        );
 
     private static CreateUserCommand CreateUniqueUserCommand(string password = "Sup3rSecure!") =>
         new("kongroo", "kongroo@example.com", password, "Kongroo Cloud Games", UserRole.User);

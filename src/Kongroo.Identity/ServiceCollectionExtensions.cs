@@ -31,8 +31,8 @@ public static class ServiceCollectionExtensions
             services.AddScoped<GetUsersQueryHandler>();
             services.AddScoped<UpdateUserRoleCommandHandler>();
 
-            services.AddScoped<IDomainEventHandler, UserCreatedDomainEventHandler>();
-            services.AddScoped<IDomainEventHandler, UserRoleChangedDomainEventHandler>();
+            services.AddDomainEventHandler<UserCreatedDomainEventHandler>();
+            services.AddDomainEventHandler<UserRoleChangedDomainEventHandler>();
         }
 
         private void AddInfrastructure(IConfiguration configuration)

@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddBuildingBlocks(IConfiguration configuration)
         {
             services.AddSingleton(TimeProvider.System);
+            services.AddApplication();
             services.AddHostedService<ApplicationInitializationService>();
 
             return services;
