@@ -71,7 +71,7 @@ public sealed class UserTests
     }
 
     [Fact]
-    public void GrantAdmin_WhenUserRoleIsUser_ShouldPromoteUser()
+    public void GrantAdmin_WhenUserRoleIsUser_ShouldPromoteUserAndRaiseRoleChangedEvent()
     {
         // Arrange
         var user = CreateUser();
@@ -82,19 +82,6 @@ public sealed class UserTests
 
         // Assert
         user.Role.ShouldBe(UserRole.Admin);
-    }
-
-    [Fact]
-    public void GrantAdmin_WhenUserRoleIsUser_ShouldRaiseRoleChangedEvent()
-    {
-        // Arrange
-        var user = CreateUser();
-        user.ClearDomainEvents();
-
-        // Act
-        user.GrantAdmin();
-
-        // Assert
         var domainEvent = user.DomainEvents.Single().ShouldBeOfType<UserRoleChangedDomainEvent>();
         domainEvent.UserId.ShouldBe(user.Id);
         domainEvent.PreviousRole.ShouldBe(UserRole.User);
@@ -102,7 +89,7 @@ public sealed class UserTests
     }
 
     [Fact]
-    public void GrantAdmin_WhenUserIsAlreadyAdmin_ShouldKeepUserAsAdmin()
+    public void GrantAdmin_WhenUserIsAlreadyAdmin_ShouldKeepUserAsAdminAndNotRaiseRoleChangedEvent()
     {
         // Arrange
         var user = CreateUser();
@@ -114,25 +101,11 @@ public sealed class UserTests
 
         // Assert
         user.Role.ShouldBe(UserRole.Admin);
-    }
-
-    [Fact]
-    public void GrantAdmin_WhenUserIsAlreadyAdmin_ShouldNotRaiseAnotherRoleChangedEvent()
-    {
-        // Arrange
-        var user = CreateUser();
-        user.GrantAdmin();
-        user.ClearDomainEvents();
-
-        // Act
-        user.GrantAdmin();
-
-        // Assert
         user.DomainEvents.ShouldBeEmpty();
     }
 
     [Fact]
-    public void RevokeAdmin_WhenUserRoleIsAdmin_ShouldDemoteUser()
+    public void RevokeAdmin_WhenUserRoleIsAdmin_ShouldDemoteUserAndRaiseRoleChangedEvent()
     {
         // Arrange
         var user = CreateUser();
@@ -144,20 +117,6 @@ public sealed class UserTests
 
         // Assert
         user.Role.ShouldBe(UserRole.User);
-    }
-
-    [Fact]
-    public void RevokeAdmin_WhenUserRoleIsAdmin_ShouldRaiseRoleChangedEvent()
-    {
-        // Arrange
-        var user = CreateUser();
-        user.GrantAdmin();
-        user.ClearDomainEvents();
-
-        // Act
-        user.RevokeAdmin();
-
-        // Assert
         var domainEvent = user.DomainEvents.Single().ShouldBeOfType<UserRoleChangedDomainEvent>();
         domainEvent.UserId.ShouldBe(user.Id);
         domainEvent.PreviousRole.ShouldBe(UserRole.Admin);
@@ -165,7 +124,7 @@ public sealed class UserTests
     }
 
     [Fact]
-    public void RevokeAdmin_WhenUserIsAlreadyUser_ShouldKeepUserAsUser()
+    public void RevokeAdmin_WhenUserIsAlreadyUser_ShouldKeepUserAsUserAndNotRaiseRoleChangedEvent()
     {
         // Arrange
         var user = CreateUser();
@@ -176,19 +135,6 @@ public sealed class UserTests
 
         // Assert
         user.Role.ShouldBe(UserRole.User);
-    }
-
-    [Fact]
-    public void RevokeAdmin_WhenUserIsAlreadyUser_ShouldNotRaiseRoleChangedEvent()
-    {
-        // Arrange
-        var user = CreateUser();
-        user.ClearDomainEvents();
-
-        // Act
-        user.RevokeAdmin();
-
-        // Assert
         user.DomainEvents.ShouldBeEmpty();
     }
 

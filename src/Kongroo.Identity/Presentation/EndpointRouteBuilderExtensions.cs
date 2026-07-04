@@ -1,12 +1,10 @@
 using System.ComponentModel;
 using System.Security.Claims;
-using Kongroo.BuildingBlocks.Presentation.Authorization;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using Kongroo.Identity.Presentation.Authorization;
+using Kongroo.Identity.Presentation.Requests;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Routing;
 
 namespace Kongroo.Identity.Presentation;
 

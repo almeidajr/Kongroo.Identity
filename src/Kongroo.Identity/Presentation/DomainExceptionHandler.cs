@@ -2,7 +2,7 @@ using Kongroo.BuildingBlocks.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kongroo.Identity.Api;
+namespace Kongroo.Identity.Presentation;
 
 public sealed class DomainExceptionHandler(
     ILogger<DomainExceptionHandler> logger,

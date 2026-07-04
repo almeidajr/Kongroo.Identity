@@ -57,10 +57,17 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
+        context.ChangeTracker.Clear();
+        var savedUser = await context.Users.SingleAsync(
+            candidate => candidate.Id == targetUserId,
+            TestContext.Current.CancellationToken
+        );
+
         // Assert
         response.ShouldSatisfyAllConditions(
             () => response.Id.ShouldBe(targetUserId.Value),
-            () => response.Role.ShouldBe(UserRole.Admin)
+            () => response.Role.ShouldBe(UserRole.Admin),
+            () => savedUser.Role.ShouldBe(UserRole.Admin)
         );
     }
 
@@ -86,7 +93,7 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
                 "target-admin@example.com",
                 "Sup3rSecure!",
                 "Target Admin",
-                UserRole.User
+                UserRole.Admin
             ),
             context,
             TestContext.Current.CancellationToken
@@ -103,10 +110,17 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
+        context.ChangeTracker.Clear();
+        var savedUser = await context.Users.SingleAsync(
+            candidate => candidate.Id == targetUserId,
+            TestContext.Current.CancellationToken
+        );
+
         // Assert
         response.ShouldSatisfyAllConditions(
             () => response.Id.ShouldBe(targetUserId.Value),
-            () => response.Role.ShouldBe(UserRole.User)
+            () => response.Role.ShouldBe(UserRole.User),
+            () => savedUser.Role.ShouldBe(UserRole.User)
         );
     }
 
@@ -224,13 +238,20 @@ public sealed class UpdateUserRoleCommandHandlerTests(PostgreSqlFixture postgreS
             TestContext.Current.CancellationToken
         );
 
+        context.ChangeTracker.Clear();
+        var savedUser = await context.Users.SingleAsync(
+            candidate => candidate.Id == targetUserId,
+            TestContext.Current.CancellationToken
+        );
+
         // Assert
         response.ShouldSatisfyAllConditions(
             () => response.Id.ShouldBe(targetUserId.Value),
             () => response.Username.ShouldBe("target-user"),
             () => response.Email.ShouldBe("target-user@example.com"),
             () => response.Name.ShouldBe("Target User"),
-            () => response.Role.ShouldBe(UserRole.User)
+            () => response.Role.ShouldBe(UserRole.User),
+            () => savedUser.Role.ShouldBe(UserRole.User)
         );
     }
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
-namespace Kongroo.Identity.Api.OpenApi;
+namespace Kongroo.Identity.Presentation.OpenApi;
 
 public sealed class BearerSecurityRequirementTransformer : IOpenApiOperationTransformer
 {

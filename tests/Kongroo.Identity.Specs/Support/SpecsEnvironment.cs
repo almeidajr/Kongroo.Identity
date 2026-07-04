@@ -67,16 +67,12 @@ public static class SpecsEnvironment
     {
         const string truncateSql = """
             TRUNCATE TABLE
-                "identity"."outbox_message",
-                "identity"."outbox_state",
-                "identity"."inbox_state",
                 "identity"."users"
             CASCADE;
             """;
 
         await using var connection = new NpgsqlConnection(ConnectionString);
         await connection.OpenAsync(cancellationToken);
-
         await using var command = new NpgsqlCommand(truncateSql, connection);
         await command.ExecuteNonQueryAsync(cancellationToken);
     }

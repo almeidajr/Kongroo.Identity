@@ -1,5 +1,5 @@
-using Kongroo.BuildingBlocks.Contracts;
 using Kongroo.Identity.Application;
+using Kongroo.Identity.Contracts;
 using Kongroo.Identity.Domain;
 using MassTransit;
 using NSubstitute;
@@ -9,7 +9,7 @@ namespace Kongroo.Identity.UnitTests.Identity.Application;
 public sealed class UserRoleChangedDomainEventHandlerTests
 {
     [Fact]
-    public async Task HandleAsync_ShouldPublishIntegrationEventWithMappedFields()
+    public async Task HandleAsync_WithUserRoleChangedDomainEvent_ShouldPublishIntegrationEventWithMappedFields()
     {
         // Arrange
         var publishEndpoint = Substitute.For<IPublishEndpoint>();

@@ -1,4 +1,3 @@
-using Kongroo.BuildingBlocks;
 using Kongroo.BuildingBlocks.Application;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
@@ -6,8 +5,7 @@ using Kongroo.Identity.Application.Abstractions;
 using Kongroo.Identity.Infrastructure;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kongroo.Identity;
 
@@ -38,7 +36,15 @@ public static class ServiceCollectionExtensions
 
         private void AddInfrastructure(IConfiguration configuration)
         {
-            services.AddRelationalDbContext<IdentityDbContext>(configuration);
+            services.AddSingleton(TimeProvider.System);
+
+            services.AddRelationalDbContext<IdentityDbContext>(contextOptions =>
+                contextOptions.UseNpgsql(
+                    configuration.GetConnectionString("Database"),
+                    postgresOptions => postgresOptions.MigrationsHistoryTable("migrations", IdentityDbContext.Schema)
+                )
+            );
+            services.AddDbInitializer<IdentityDbContext>();
 
             services
                 .AddOptions<BootstrapAdminOptions>()

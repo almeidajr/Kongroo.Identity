@@ -1,5 +1,5 @@
 using Kongroo.Identity.Application;
-using Kongroo.Identity.Presentation;
+using Kongroo.Identity.Presentation.Requests;
 using Kongroo.Identity.Specs.Support;
 
 namespace Kongroo.Identity.Specs.Drivers;

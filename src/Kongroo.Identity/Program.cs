@@ -4,14 +4,12 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HealthChecks.UI.Client;
-using Kongroo.BuildingBlocks;
-using Kongroo.BuildingBlocks.Presentation.Authorization;
 using Kongroo.Identity;
-using Kongroo.Identity.Api;
-using Kongroo.Identity.Api.OpenApi;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.Presentation;
+using Kongroo.Identity.Presentation.Authorization;
+using Kongroo.Identity.Presentation.OpenApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
@@ -47,7 +45,6 @@ builder.Services.AddOpenApi(options =>
     options.AddOperationTransformer<BearerSecurityRequirementTransformer>();
 });
 
-builder.Services.AddValidation();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<DomainExceptionHandler>();
 
@@ -85,7 +82,6 @@ builder
     .Services.AddAuthorizationBuilder()
     .AddPolicy(AuthorizationPolicies.AdminOnly, policy => policy.RequireRole(nameof(UserRole.Admin)));
 
-builder.Services.AddBuildingBlocks(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
 
 var app = builder.Build();

@@ -9,9 +9,8 @@
   </Folder>
 
   <Folder Name="/src/">
-    <Project Path="src/Kongroo.BuildingBlocks/Kongroo.BuildingBlocks.csproj" />
+    <Project Path="src/Kongroo.Identity.Contracts/Kongroo.Identity.Contracts.csproj" />
     <Project Path="src/Kongroo.Identity/Kongroo.Identity.csproj" />
-    <Project Path="src/Kongroo.Identity.Api/Kongroo.Identity.Api.csproj" />
   </Folder>
 
   <Folder Name="/tests/">

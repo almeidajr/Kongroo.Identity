@@ -1,4 +1,4 @@
-# Kongroo.Identity
+# <img alt="Kongroo" src="./logo.png" width="40"/> Kongroo.Identity
 
 User registration, authentication, and JWT issuance microservice for FIAP Cloud Games.
 
@@ -18,20 +18,20 @@ On user registration the service publishes a `UserCreatedIntegrationEvent` to Ra
 
 ## Environment Variables
 
-| Variable | Source | Description |
-|---|---|---|
-| `ConnectionStrings__Database` | Secret | PostgreSQL connection string |
-| `RabbitMq__Host` | ConfigMap | RabbitMQ broker hostname (e.g. `rabbitmq`) |
-| `RabbitMq__User` | Secret | RabbitMQ username |
-| `RabbitMq__Pass` | Secret | RabbitMQ password |
-| `Jwt__Issuer` | ConfigMap | JWT issuer |
-| `Jwt__Audience` | ConfigMap | JWT audience |
-| `Jwt__SigningKey` | Secret | JWT signing key (min 32 chars) |
-| `Jwt__AccessTokenLifetimeMinutes` | ConfigMap | Token lifetime in minutes |
-| `BootstrapAdmin__Username` | ConfigMap | Admin account username |
-| `BootstrapAdmin__Email` | ConfigMap | Admin account email |
-| `BootstrapAdmin__Password` | Secret | Admin account password |
-| `BootstrapAdmin__Name` | ConfigMap | Admin display name |
+| Variable                          | Source    | Description                                |
+| --------------------------------- | --------- | ------------------------------------------ |
+| `ConnectionStrings__Database`     | Secret    | PostgreSQL connection string               |
+| `RabbitMq__Host`                  | ConfigMap | RabbitMQ broker hostname (e.g. `rabbitmq`) |
+| `RabbitMq__User`                  | Secret    | RabbitMQ username                          |
+| `RabbitMq__Pass`                  | Secret    | RabbitMQ password                          |
+| `Jwt__Issuer`                     | ConfigMap | JWT issuer                                 |
+| `Jwt__Audience`                   | ConfigMap | JWT audience                               |
+| `Jwt__SigningKey`                 | Secret    | JWT signing key (min 32 chars)             |
+| `Jwt__AccessTokenLifetimeMinutes` | ConfigMap | Token lifetime in minutes                  |
+| `BootstrapAdmin__Username`        | ConfigMap | Admin account username                     |
+| `BootstrapAdmin__Email`           | ConfigMap | Admin account email                        |
+| `BootstrapAdmin__Password`        | Secret    | Admin account password                     |
+| `BootstrapAdmin__Name`            | ConfigMap | Admin display name                         |
 
 ## Running Locally
 

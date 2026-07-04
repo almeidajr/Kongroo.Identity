@@ -18,7 +18,7 @@ public sealed class UnitOfWorkTests(PostgreSqlFixture postgreSqlFixture)
     private readonly IdentityTestDatabase _database = new(postgreSqlFixture);
 
     [Fact]
-    public async Task CommitAsync_ShouldDispatchEventsAndPersist()
+    public async Task CommitAsync_WithNewUser_ShouldDispatchEventsAndPersist()
     {
         // Arrange
         await using var context = _database.CreateDbContext();

@@ -2,10 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS restore
 WORKDIR /src
 COPY . .
-RUN dotnet restore src/Kongroo.Identity.Api --locked-mode
+RUN dotnet restore src/Kongroo.Identity --locked-mode
 
 FROM restore AS build
-RUN dotnet publish src/Kongroo.Identity.Api \
+RUN dotnet publish src/Kongroo.Identity \
     -c Release \
     -o /app/publish \
     --no-restore
@@ -27,4 +27,4 @@ USER kongroo
 
 EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "Kongroo.Identity.Api.dll"]
+ENTRYPOINT ["dotnet", "Kongroo.Identity.dll"]

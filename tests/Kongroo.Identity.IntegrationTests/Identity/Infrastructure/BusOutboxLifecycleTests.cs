@@ -1,8 +1,8 @@
 using System.Collections.Concurrent;
 using Kongroo.BuildingBlocks.Application;
-using Kongroo.BuildingBlocks.Contracts;
 using Kongroo.BuildingBlocks.Infrastructure;
 using Kongroo.Identity.Application;
+using Kongroo.Identity.Contracts;
 using Kongroo.Identity.Domain;
 using Kongroo.Identity.Infrastructure;
 using Kongroo.Identity.IntegrationTests.Fixtures;
@@ -36,8 +36,8 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
                         .UseSnakeCaseNamingConvention()
                 );
                 services.AddScoped<IUnitOfWork, UnitOfWork<IdentityDbContext>>();
-                services.AddScoped<IDomainEventHandler, UserCreatedDomainEventHandler>();
-                services.AddScoped<IDomainEventHandler, UserRoleChangedDomainEventHandler>();
+                services.AddDomainEventHandler<UserCreatedDomainEventHandler>();
+                services.AddDomainEventHandler<UserRoleChangedDomainEventHandler>();
                 services.AddMassTransit(bus =>
                 {
                     bus.AddEntityFrameworkOutbox<IdentityDbContext>(outbox =>
@@ -54,7 +54,7 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
     }
 
     [Fact]
-    public async Task Commit_ShouldPersistUserAndOutboxRowAtomically_ThenDeliver()
+    public async Task CommitAsync_WithNewUser_ShouldPersistUserAndOutboxRowAndDeliverEvent()
     {
         var cancellationToken = TestContext.Current.CancellationToken;
         using var host = BuildHost();
@@ -79,7 +79,6 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
 
                 await unitOfWork.CommitAsync(cancellationToken);
 
-                // Atomic: user row AND a staged outbox_message row both present right after commit.
                 (await context.Users.CountAsync(cancellationToken)).ShouldBe(1);
                 var outboxCount = await context
                     .Database.SqlQuery<long>(
@@ -89,7 +88,6 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
                 outboxCount.ShouldBe(1);
             }
 
-            // Eventual delivery after commit, with mapped fields.
             await WaitUntilAsync(() => !Received.IsEmpty, TimeSpan.FromSeconds(10), cancellationToken);
             var delivered = Received.ShouldHaveSingleItem();
             delivered.UserId.ShouldBe(createdUserId.Value);
@@ -102,7 +100,7 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
     }
 
     [Fact]
-    public async Task Commit_WhenSaveFails_ShouldNotPersistAnythingNorDeliver()
+    public async Task CommitAsync_WhenSaveFails_ShouldNotPersistAnythingOrDeliverEvent()
     {
         var cancellationToken = TestContext.Current.CancellationToken;
         using var host = BuildHost();
@@ -110,7 +108,6 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
 
         try
         {
-            // Seed an existing user so a second user with the same username violates the unique index.
             await using (var seedScope = host.Services.CreateAsyncScope())
             {
                 var context = seedScope.ServiceProvider.GetRequiredService<IdentityDbContext>();
@@ -129,7 +126,6 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
             await WaitUntilAsync(() => !Received.IsEmpty, TimeSpan.FromSeconds(10), cancellationToken);
             Received.Clear();
 
-            // Force a SaveChanges failure: duplicate username.
             await using (var scope = host.Services.CreateAsyncScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
@@ -146,7 +142,6 @@ public sealed class BusOutboxLifecycleTests(PostgreSqlFixture postgreSqlFixture)
                 await Should.ThrowAsync<DbUpdateException>(() => unitOfWork.CommitAsync(cancellationToken));
             }
 
-            // Nothing extra committed, nothing delivered for the failed commit.
             await using (var verifyScope = host.Services.CreateAsyncScope())
             {
                 var context = verifyScope.ServiceProvider.GetRequiredService<IdentityDbContext>();

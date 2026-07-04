@@ -1,5 +1,5 @@
-﻿using Kongroo.BuildingBlocks.Application;
+using Kongroo.BuildingBlocks.Application;
 
-namespace Kongroo.BuildingBlocks.Contracts;
+namespace Kongroo.Identity.Contracts;
 
 public sealed record UserCreatedIntegrationEvent(Guid UserId, string Email, string Name) : IntegrationEvent;

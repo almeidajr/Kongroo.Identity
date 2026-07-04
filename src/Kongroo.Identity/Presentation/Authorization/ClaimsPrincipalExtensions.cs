@@ -1,7 +1,8 @@
 using System.Security.Claims;
 using Kongroo.BuildingBlocks.Domain.Exceptions;
+using Kongroo.Identity.Domain;
 
-namespace Kongroo.BuildingBlocks.Presentation.Authorization;
+namespace Kongroo.Identity.Presentation.Authorization;
 
 public static class ClaimsPrincipalExtensions
 {
@@ -13,7 +14,7 @@ public static class ClaimsPrincipalExtensions
 
             return Guid.TryParse(subject, out var userId)
                 ? userId
-                : throw new UnauthorizedException(nameof(ClaimsPrincipal), "missing or invalid subject claim");
+                : throw new UnauthorizedException(nameof(User), "missing or invalid subject claim");
         }
     }
 }

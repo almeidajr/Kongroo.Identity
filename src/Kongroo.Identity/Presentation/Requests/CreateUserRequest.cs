@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Kongroo.Identity.Domain;
 
-namespace Kongroo.Identity.Presentation;
+namespace Kongroo.Identity.Presentation.Requests;
 
 public sealed record CreateUserRequest(
     [property: Required]

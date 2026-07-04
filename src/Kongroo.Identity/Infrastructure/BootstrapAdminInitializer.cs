@@ -2,7 +2,6 @@ using Kongroo.BuildingBlocks.Application;
 using Kongroo.Identity.Application;
 using Kongroo.Identity.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Kongroo.Identity.Infrastructure;

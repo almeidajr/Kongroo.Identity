@@ -1,5 +1,5 @@
 using Kongroo.BuildingBlocks.Application;
-using Kongroo.BuildingBlocks.Contracts;
+using Kongroo.Identity.Contracts;
 using Kongroo.Identity.Domain;
 using MassTransit;
 

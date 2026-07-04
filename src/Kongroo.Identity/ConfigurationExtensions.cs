@@ -1,4 +1,4 @@
-namespace Kongroo.Identity.Api;
+namespace Kongroo.Identity;
 
 public static class ConfigurationExtensions
 {
