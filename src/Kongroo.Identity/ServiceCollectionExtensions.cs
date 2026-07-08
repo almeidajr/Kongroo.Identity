@@ -67,7 +67,7 @@ public static class ServiceCollectionExtensions
                 .ValidateOnStart();
             services.AddMassTransit(busRegistration =>
             {
-                busRegistration.SetKebabCaseEndpointNameFormatter();
+                busRegistration.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("identity"));
 
                 busRegistration.AddEntityFrameworkOutbox<IdentityDbContext>(outbox =>
                 {

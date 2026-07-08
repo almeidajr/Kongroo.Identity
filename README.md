@@ -44,7 +44,7 @@ docker compose up postgres rabbitmq -d
 Then run the service:
 
 ```bash
-dotnet run --project src/Kongroo.Identity.Api
+dotnet run --project src/Kongroo.Identity
 ```
 
 ## Running Tests
