@@ -891,7 +891,7 @@
           "Microsoft.Extensions.Diagnostics.HealthChecks.ResourceUtilization": "[10.7.0, )",
           "Microsoft.OpenApi": "[2.9.0, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )",
-          "Scalar.AspNetCore": "[2.16.10, )",
+          "Scalar.AspNetCore": "[2.16.11, )",
           "Serilog.AspNetCore": "[10.0.0, )",
           "Serilog.Enrichers.Environment": "[3.0.1, )",
           "Serilog.Enrichers.Process": "[3.0.0, )",
@@ -1096,9 +1096,9 @@
       },
       "Scalar.AspNetCore": {
         "type": "CentralTransitive",
-        "requested": "[2.16.10, )",
-        "resolved": "2.16.10",
-        "contentHash": "dJsam1uxJ+h6YzaqDGjja1y3miyBd4VDumMwwow03yJapiRp3OtV5lMaOUvp8w5b16gAflYyvfj7HDL+0X2Rqw=="
+        "requested": "[2.16.11, )",
+        "resolved": "2.16.11",
+        "contentHash": "Sa7aHHX3x6qJo/nCOf0MPTi+Nl8tihiEDqWw7mRMajFn6KKElZyM4CP4C6ptUBPFfBWN61dvYcuMe8yWJaeYsA=="
       },
       "Serilog.AspNetCore": {
         "type": "CentralTransitive",
