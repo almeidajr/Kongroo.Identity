@@ -14,7 +14,7 @@ User registration, authentication, and JWT issuance microservice for FIAP Cloud 
 
 ## Messaging
 
-On user registration the service publishes a `UserCreatedIntegrationEvent` to RabbitMQ (via MassTransit) for downstream consumers (e.g. notifications). Events are dispatched through a transactional outbox, so delivery is at-least-once and consumers must be idempotent.
+On user registration the service publishes a `UserCreatedIntegrationEvent`, and on role changes a `UserRoleChangedIntegrationEvent`, to RabbitMQ (via MassTransit) for downstream consumers (e.g. notifications). Events are dispatched through a transactional outbox, so delivery is at-least-once and consumers must be idempotent.
 
 ## Environment Variables
 
