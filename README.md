@@ -11,10 +11,15 @@ User registration, authentication, and JWT issuance microservice for FIAP Cloud 
 - `GET /users/{id}` — Get user by ID (Admin only)
 - `PUT /users/{id}/role` — Change user role (Admin only)
 - `GET /health` — Health check
+- `GET /metrics` — Prometheus metrics
 
 ## Messaging
 
 On user registration the service publishes a `UserCreatedIntegrationEvent`, and on role changes a `UserRoleChangedIntegrationEvent`, to RabbitMQ (via MassTransit) for downstream consumers (e.g. notifications). Events are dispatched through a transactional outbox, so delivery is at-least-once and consumers must be idempotent.
+
+With `Messaging__Transport=AmazonSqs` the bus publishes to SNS topics `kongroo-user-created` and
+`kongroo-user-role-changed` (names fixed by `MessagingTopics`); the Notifications Lambda subscribes to
+the first one.
 
 ## Environment Variables
 
@@ -32,6 +37,14 @@ On user registration the service publishes a `UserCreatedIntegrationEvent`, and 
 | `BootstrapAdmin__Email`           | ConfigMap | Admin account email                        |
 | `BootstrapAdmin__Password`        | Secret    | Admin account password                     |
 | `BootstrapAdmin__Name`            | ConfigMap | Admin display name                         |
+| `Messaging__Transport`            | ConfigMap | `RabbitMq` (default, compose/tests) or `AmazonSqs` (k8s) |
+| `Aws__Region`                     | ConfigMap | AWS region for SQS/SNS when `AmazonSqs`    |
+| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` / `AWS_SESSION_TOKEN` | Secret `aws-credentials` | AWS SDK default credential chain |
+
+## Observability
+
+`GET /metrics` exposes OpenTelemetry metrics in Prometheus format (ASP.NET Core request duration by
+route and status, HttpClient, .NET runtime, MassTransit publish/consume counters).
 
 ## Running Locally
 
