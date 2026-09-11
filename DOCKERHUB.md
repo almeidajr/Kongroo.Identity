@@ -17,7 +17,7 @@ Amazon SQS/SNS in Kubernetes, publishing to topics `kongroo-user-created` and
 ## Quick start
 
 The container listens on port **8080** and requires a PostgreSQL database and a
-RabbitMQ broker.
+messaging broker (RabbitMQ or Amazon SQS/SNS, per `Messaging__Transport`).
 
 ```bash
 docker run -p 8080:8080 \
@@ -73,7 +73,7 @@ empty.
 ## Requirements
 
 - A reachable PostgreSQL database
-- A reachable RabbitMQ broker
+- A reachable messaging broker (RabbitMQ or Amazon SQS/SNS, per `Messaging__Transport`)
 
 ## Source
 
