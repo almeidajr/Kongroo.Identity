@@ -3,12 +3,15 @@
 User registration, authentication, and JWT issuance microservice for the
 Kongroo platform. Built with ASP.NET Core and PostgreSQL, following
 Domain-Driven Design with a transactional outbox that reliably publishes
-integration events (e.g. `UserCreatedIntegrationEvent`) to RabbitMQ via MassTransit.
+integration events (e.g. `UserCreatedIntegrationEvent`) via MassTransit. The
+transport is selected by `Messaging__Transport`: RabbitMQ by default, or
+Amazon SQS/SNS in Kubernetes, publishing to topics `kongroo-user-created` and
+`kongroo-user-role-changed`.
 
 ## Tags
 
 - `latest` — most recent stable release
-- `x.y.z`  — specific version (e.g. `0.0.2`)
+- `x.y.z`  — specific version (e.g. `0.1.0`)
 - `dev`    — in-progress development build
 
 ## Quick start
@@ -39,6 +42,7 @@ docker run -p 8080:8080 \
 | `GET /users/{id}` | Get user by ID (Admin only) |
 | `PUT /users/{id}/role` | Change user role (Admin only) |
 | `GET /health` | Health check |
+| `GET /metrics` | Prometheus metrics (unauthenticated, scraped in-cluster) |
 
 ## Configuration
 
@@ -59,6 +63,9 @@ nested configuration sections.
 | `BootstrapAdmin__Email` | Seed admin email |
 | `BootstrapAdmin__Password` | Seed admin password |
 | `BootstrapAdmin__Name` | Seed admin display name |
+| `Messaging__Transport` | `RabbitMq` (default, used by Docker Compose and the tests) or `AmazonSqs` (Kubernetes) |
+| `Aws__Region` | AWS region for SQS/SNS, required when `Messaging__Transport=AmazonSqs` (e.g. `us-east-1`) |
+| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` / `AWS_SESSION_TOKEN` | AWS SDK default credential chain, supplied by the `aws-credentials` Secret |
 
 The bootstrap admin account is created on startup only when the users table is
 empty.
