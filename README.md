@@ -20,7 +20,9 @@ On user registration the service publishes a `UserCreatedIntegrationEvent`, and 
 The transport is selected by `Messaging__Transport`: `RabbitMq` (default, used by Docker Compose and the
 tests) or `AmazonSqs` (Kubernetes). With `Messaging__Transport=AmazonSqs` the bus publishes to SNS topics
 `kongroo-user-created` and `kongroo-user-role-changed` (names fixed by `MessagingTopics`); the Notifications
-Lambda subscribes to the first one.
+Lambda subscribes to the first one. The Kubernetes manifests default to `AmazonSqs`, so the pod only becomes
+Ready once the `aws-credentials` Secret (shipped and refreshed by Kongroo.Orchestration) holds live Learner Lab
+credentials; set `Messaging__Transport=RabbitMq` in the ConfigMap to run the cluster against RabbitMQ instead.
 
 ## Environment Variables
 
