@@ -15,7 +15,19 @@ User registration, authentication, and JWT issuance microservice for FIAP Cloud 
 
 ## Messaging
 
-On user registration the service publishes a `UserCreatedIntegrationEvent`, and on role changes a `UserRoleChangedIntegrationEvent`, to RabbitMQ (via MassTransit) for downstream consumers (e.g. notifications). Events are dispatched through a transactional outbox, so delivery is at-least-once and consumers must be idempotent.
+```mermaid
+flowchart LR
+    client([Client]) -->|POST /users| identity[Identity API]
+    identity -->|one transaction| db[(Postgres<br/>users + outbox)]
+    db -.->|UserCreatedIntegrationEvent| created{{kongroo-user-created}}
+    db -.->|UserRoleChangedIntegrationEvent| changed{{kongroo-user-role-changed}}
+    created -.-> lambda[[Notifications Lambda]]
+```
+
+On user registration the service publishes a `UserCreatedIntegrationEvent`, and on role changes a
+`UserRoleChangedIntegrationEvent`, through MassTransit for downstream consumers (e.g. notifications).
+Events are dispatched through a transactional outbox, so delivery is at-least-once and consumers must be
+idempotent.
 
 The transport is selected by `Messaging__Transport`: `RabbitMq` (default, used by Docker Compose and the
 tests) or `AmazonSqs` (Kubernetes). With `Messaging__Transport=AmazonSqs` the bus publishes to SNS topics
