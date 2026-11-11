@@ -1,5 +1,7 @@
 # <img alt="Kongroo" src="./logo.png" width="40"/> Kongroo.Identity
 
+[![CI/CD](https://github.com/almeidajr/Kongroo.Identity/actions/workflows/ci-cd.yml/badge.svg?branch=master)](https://github.com/almeidajr/Kongroo.Identity/actions/workflows/ci-cd.yml)
+
 User registration, authentication, and JWT issuance microservice for FIAP Cloud Games.
 
 ## Endpoints
