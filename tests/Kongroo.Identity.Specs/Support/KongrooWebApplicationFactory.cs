@@ -32,7 +32,7 @@ public sealed class KongrooWebApplicationFactory(
                     ["Jwt:AccessTokenLifetimeMinutes"] = "15",
                     ["BootstrapAdmin:Username"] = "spec-admin",
                     ["BootstrapAdmin:Email"] = "spec-admin@kongroo.dev",
-                    ["BootstrapAdmin:Password"] = "Sup3rSecure!",
+                    ["BootstrapAdmin:Password"] = $"{Convert.ToHexString(RandomNumberGenerator.GetBytes(16))}-a1",
                     ["BootstrapAdmin:Name"] = "Specs Admin",
                 };
 
