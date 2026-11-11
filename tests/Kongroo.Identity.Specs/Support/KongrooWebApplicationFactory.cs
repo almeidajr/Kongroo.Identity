@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Kongroo.Identity.Specs.Support;
@@ -27,7 +28,7 @@ public sealed class KongrooWebApplicationFactory(
                     ["RabbitMq:Pass"] = rabbitMqPassword,
                     ["Jwt:Issuer"] = "Kongroo.Identity.Specs",
                     ["Jwt:Audience"] = "Kongroo.Identity.Specs",
-                    ["Jwt:SigningKey"] = "Kongroo.Identity.Specs.SigningKey.For.Bdd.Tests",
+                    ["Jwt:SigningKey"] = Convert.ToHexString(RandomNumberGenerator.GetBytes(32)),
                     ["Jwt:AccessTokenLifetimeMinutes"] = "15",
                     ["BootstrapAdmin:Username"] = "spec-admin",
                     ["BootstrapAdmin:Email"] = "spec-admin@kongroo.dev",

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Cryptography;
 using Npgsql;
 using Testcontainers.PostgreSql;
 using Testcontainers.RabbitMq;
@@ -10,7 +11,7 @@ public static class SpecsEnvironment
     private const string PostgreSqlImage = "postgres:18.3";
     private const string RabbitMqImage = "rabbitmq:4-management";
     private const string RabbitMqUsername = "kongroo";
-    private const string RabbitMqPassword = "development";
+    private static readonly string RabbitMqPassword = Convert.ToHexString(RandomNumberGenerator.GetBytes(16));
 
     private static readonly SemaphoreSlim Gate = new(1, 1);
     private static PostgreSqlContainer? _database;
