@@ -63,9 +63,11 @@ route and status, HttpClient, .NET runtime, MassTransit publish/consume counters
 
 ## Running Locally
 
-Start PostgreSQL and RabbitMQ first (from `Kongroo.Orchestration`):
+Generate the local credentials (also sets this API's user-secrets) and start PostgreSQL and RabbitMQ
+(from `Kongroo.Orchestration`):
 
-```bash
+```powershell
+./scripts/new-secrets.ps1 -SkipKubernetes
 docker compose up postgres rabbitmq -d
 ```
 
@@ -89,10 +91,10 @@ dotnet test
 dotnet restore
 docker build -t kongroo-identity .
 docker run -p 8080:8080 \
-  -e ConnectionStrings__Database="Host=localhost;Database=kongroo_identity;Username=kongroo;Password=development" \
+  -e ConnectionStrings__Database="<postgres-connection-string>" \
   -e RabbitMq__Host="localhost" \
   -e RabbitMq__User="kongroo" \
-  -e RabbitMq__Pass="development" \
-  -e Jwt__SigningKey="your-key-here" \
+  -e RabbitMq__Pass="<rabbitmq-password>" \
+  -e Jwt__SigningKey="<jwt-signing-key>" \
   kongroo-identity
 ```

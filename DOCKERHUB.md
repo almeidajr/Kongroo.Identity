@@ -21,13 +21,13 @@ messaging broker (RabbitMQ or Amazon SQS/SNS, per `Messaging__Transport`).
 
 ```bash
 docker run -p 8080:8080 \
-  -e ConnectionStrings__Database="Host=postgres;Database=kongroo_identity;Username=kongroo;Password=development" \
+  -e ConnectionStrings__Database="<postgres-connection-string>" \
   -e RabbitMq__Host="rabbitmq" \
   -e RabbitMq__User="kongroo" \
-  -e RabbitMq__Pass="development" \
-  -e Jwt__Issuer="kongroo" \
-  -e Jwt__Audience="kongroo" \
-  -e Jwt__SigningKey="<a-secret-key-at-least-32-characters-long>" \
+  -e RabbitMq__Pass="<rabbitmq-password>" \
+  -e Jwt__Issuer="Kongroo.Identity.Api" \
+  -e Jwt__Audience="Kongroo.Identity.Api" \
+  -e Jwt__SigningKey="<jwt-signing-key-at-least-32-characters>" \
   josealmeidajr/kongroo-identity:latest
 ```
 
