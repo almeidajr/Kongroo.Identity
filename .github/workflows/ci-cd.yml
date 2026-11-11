@@ -10,14 +10,23 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 env:
   IMAGE: josealmeidajr/kongroo-identity
   ECR_REPOSITORY: kongroo-identity
+  DEPLOYMENT: identity-api
   AWS_REGION: us-east-1
+  EKS_CLUSTER: kongroo
+  NAMESPACE: kongroo
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      pushed-to-ecr: ${{ steps.ecr.outcome == 'success' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -60,7 +69,8 @@ jobs:
           exit-code: "1"
 
       - name: Push to Docker Hub
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        id: dockerhub
+        if: github.ref == 'refs/heads/master'
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -69,7 +79,8 @@ jobs:
           docker push "$IMAGE:$GITHUB_SHA"
 
       - name: Push to ECR
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.ECR_REGISTRY != ''
+        id: ecr
+        if: steps.dockerhub.outcome == 'success' && vars.ECR_REGISTRY != ''
         env:
           ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -83,10 +94,10 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.ECR_REGISTRY != ''
+    if: needs.build.outputs.pushed-to-ecr == 'true'
     runs-on: ubuntu-latest
     concurrency:
-      group: deploy-identity
+      group: deploy-${{ github.repository }}
       cancel-in-progress: false
     env:
       ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
@@ -99,9 +110,9 @@ jobs:
           aws sts get-caller-identity > /dev/null || { echo "::error::Lab credentials expired: run eks/arm.ps1"; exit 1; }
 
       - name: Configure kubectl
-        run: aws eks update-kubeconfig --region "$AWS_REGION" --name kongroo
+        run: aws eks update-kubeconfig --region "$AWS_REGION" --name "$EKS_CLUSTER"
 
       - name: Roll out
         run: |
-          kubectl -n kongroo set image deployment/identity-api identity-api="$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA"
-          kubectl -n kongroo rollout status deployment/identity-api --timeout=10m
+          kubectl -n "$NAMESPACE" set image "deployment/$DEPLOYMENT" "$DEPLOYMENT=$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA"
+          kubectl -n "$NAMESPACE" rollout status "deployment/$DEPLOYMENT" --timeout=10m
